@@ -49,6 +49,5 @@ describe('Saucedemo login test', () => {
     cy.get('#logout_sidebar_link').click()
 
     cy.url().should('not.include', 'inventory.html')
-
   })
 })
