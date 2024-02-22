@@ -39,4 +39,16 @@ describe('Saucedemo login test', () => {
 
     cy.get('[data-test="error"]').should('have.text', 'Epic sadface: Sorry, this user has been locked out.')
   })
+  it('Logout button should return user to the login page', () => {
+    cy.visit('https://www.saucedemo.com/')
+
+    cy.get('[data-test="username"]').type('standard_user')
+    cy.get('[data-test="password"]').type('secret_sauce')
+    cy.get('[data-test="login-button"]').click()
+    cy.get('#react-burger-menu-btn').click()
+    cy.get('#logout_sidebar_link').click()
+
+    cy.url().should('not.include', 'inventory.html')
+
+  })
 })
