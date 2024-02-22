@@ -21,4 +21,22 @@ describe('Saucedemo login test', () => {
 
     cy.url().should('include', 'inventory.html')
   })
+  it('Displays appropriate error for an incorrect username', () => {
+    cy.visit('https://www.saucedemo.com/')
+
+    cy.get('[data-test="username"]').type('not_a_user')
+    cy.get('[data-test="password"]').type('not_a_password')
+    cy.get('[data-test="login-button"]').click()
+
+    cy.get('[data-test="error"]').should('have.text', 'Epic sadface: Username and password do not match any user in this service')
+  })
+  it('Displays appropriate error for a locked out user', () => {
+    cy.visit('https://www.saucedemo.com/')
+
+    cy.get('[data-test="username"]').type('locked_out_user')
+    cy.get('[data-test="password"]').type('secret_sauce')
+    cy.get('[data-test="login-button"]').click()
+
+    cy.get('[data-test="error"]').should('have.text', 'Epic sadface: Sorry, this user has been locked out.')
+  })
 })
